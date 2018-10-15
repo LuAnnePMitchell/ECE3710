@@ -1,0 +1,62 @@
+import json
+import numpy
+import math
+import matplotlib
+import matplotlib.pyplot as plot
+import scipy.stats
+
+# load the json document
+midterm = json.load(open("midterm.json"))
+
+# declare variables
+total = 0.0;
+standDev = 0.0;
+sd = 0.0
+xValue = 0.0;
+
+# for loop to add up all items in midterm array
+for m in midterm:
+  total = total + m;
+
+# calculate the mean and round to 2 decimal places
+mean = round(total/len(midterm),2);
+
+# Print the mean
+print("\n\nMean: ",mean);
+
+# calculate the length of midterm array
+length = len(midterm);
+
+# for loop calculates numerator part of standard deviation formula
+for m in midterm:
+  xValue = xValue + (m - mean)*(m - mean);
+
+# calculate standard deviation by dividing xValue by length, then rounding to 2 decimal places  
+sd = round(math.sqrt(xValue/length),2);
+
+# print standard deviation
+print("Standard Deviation: ",sd);
+
+# calculate z score of X < 1.2 and then print it
+probability1 = round((1.2 - mean)/sd,3);
+print("P(X < 1.2), z score is: ", probability1)
+# z value for probability1
+zValueProb1 = 0.2005;
+# print zValueProb1
+print("z value is: ", zValueProb1);
+
+#calculate z score of X > 2.1 and then print it
+probability2 = round((2.1 - mean)/sd,3);
+print("P(X > 2.1), z score is: ", probability2)
+#z value for probability2
+zValueProb2 = 0.2296;
+#print zValueProb2
+print("z value is: ",zValueProb2);
+
+# calculate P(X < 1.2) and P(X > 2.1)
+probability = round((zValueProb2 - zValueProb1)*100, 2);
+
+print("Probability: P(X < 1.2) and P(X > 2.1)", probability,"%");
+
+
+  
