@@ -6,13 +6,24 @@ import matplotlib.pyplot as plot
 import scipy.stats
 
 # load the json document
-midterm = json.load(open("midterm.json"))
+midterm = json.load(open('midterm.json'))
+
+MidBoxPlot = plot.figure()
+plot.boxplot(midterm)
+plot.title('Box Plot')
+MidBoxPlot.savefig('BoxPlotMidterm.png')
+
+MidHisto = plot.figure()
+plot.hist(midterm)
+plot.title('Histogram Plot')
+MidHisto.savefig('HistoPlotMidterm.png')
 
 # declare variables
 total = 0.0;
 standDev = 0.0;
 sd = 0.0
 xValue = 0.0;
+e = 2.71828;
 
 # for loop to add up all items in midterm array
 for m in midterm:
@@ -37,7 +48,25 @@ sd = round(math.sqrt(xValue/(length-1)),2);
 # print standard deviation
 print("Standard Deviation: ",sd);
 
+# calculate lambda
+lambdaMidterm = length/((length+1)*mean);
+print('\nLambda is: ', lambdaMidterm);
+
+print('\nExponential Distribution:')
+# Calculate Exponential Distribution for X < 1.2
+expDistribution1 = round((1 - (1/e**(lambdaMidterm*1.2)))*100, 2);
+print('Probability X < 1.2 is: ', expDistribution1,'%');
+
+
+# calculate Exponential Distribution for X > 2.1
+expDistribution2 = round((1 - (1/e**(lambdaMidterm*2.1)))*100, 2);
+print('Probability X > 2.1 is: ', expDistribution2,'%');
+
+print("P(X <=1.2) + P(X >=2.1) = ", round(expDistribution1 + expDistribution2,2), '%');
+
+# Normal Distribution
 # calculate z score of X < 1.2 and then print it
+print("\n\nNormal Distribution:")
 probability1 = round((1.2 - mean)/sd,3);
 print("P(X < 1.2), z score is: ", probability1)
 # z value for probability1
@@ -56,7 +85,6 @@ print("z value is: ",zValueProb2);
 # calculate P(X < 1.2) and P(X > 2.1)
 probability = round((zValueProb2 - zValueProb1)*100, 2);
 
-print("Probability: P(X < 1.2) and P(X > 2.1)", probability,"%");
-
+print("Probability P(X < 1.2) and P(X > 2.1) is: ", probability,"%");
 
   
